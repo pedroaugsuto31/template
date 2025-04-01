@@ -1,0 +1,32 @@
+spring:
+  jpa:
+    database: postgresql
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      encoding: UTF-8
+
+  datasource:
+    url: jdbc:postgresql://db.idqhtivpeskaocoxxzjj.supabase.co:5432/postgres?user=postgres&password=&3c1ZBt2bh@n=vu0
+#    url: jdbc:h2:mem:templatedb
+#    username: template
+#    password:
+
+server:
+  port: 8081
+  servlet:
+    context-path: /template-api
+
+springdoc:
+  packagesToScan: br.gov.ce.sps
+  swagger-ui:
+    tags-sorter: alpha
+    doc-expansion: none
+    try-it-out-enabled: true
+    operations-sorter: alpha
+  default-flat-param-object: true
