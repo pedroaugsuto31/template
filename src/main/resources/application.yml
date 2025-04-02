@@ -12,10 +12,9 @@ spring:
       encoding: UTF-8
 
   datasource:
-    url: jdbc:postgresql://db.idqhtivpeskaocoxxzjj.supabase.co:5432/postgres?user=postgres&password=&3c1ZBt2bh@n=vu0
-#    url: jdbc:h2:mem:templatedb
-#    username: template
-#    password:
+    url: jdbc:h2:mem:templatedb
+    username: template
+    password:
 
 server:
   port: 8081
