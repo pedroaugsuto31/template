@@ -22,7 +22,7 @@ server:
     context-path: /template-api
 
 springdoc:
-  packagesToScan: br.gov.ce.sps
+  packagesToScan: com.pedroaugusto
   swagger-ui:
     tags-sorter: alpha
     doc-expansion: none

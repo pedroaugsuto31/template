@@ -8,8 +8,8 @@
         <version>3.2.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>br.gov.ce.sps</groupId>
-    <artifactId>template</artifactId>
+    <groupId>com.pedroaugusto</groupId>
+    <artifactId>escola</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>template</name>
     <description>Template Back-end</description>
