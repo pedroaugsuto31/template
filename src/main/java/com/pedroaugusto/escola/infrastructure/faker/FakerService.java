@@ -1,12 +1,12 @@
 package com.pedroaugusto.escola.infrastructure.faker;
 
+import com.github.javafaker.Faker;
 import com.pedroaugusto.escola.api.controller.*;
 import com.pedroaugusto.escola.api.request.*;
 import com.pedroaugusto.escola.domain.model.enums.DiaEnum;
 import com.pedroaugusto.escola.domain.model.enums.SexoEnum;
 import com.pedroaugusto.escola.domain.model.enums.TurnoEnum;
 import com.pedroaugusto.escola.domain.repository.*;
-import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +33,9 @@ public class FakerService {
 
     private final ProfessorController professorController;
     private final ProfessorRepository professorRepository;
+
+    private final CursoController cursoController;
+    private final CursoRepository cursoRepository;
 
     private final Faker faker = new Faker(new Locale("pt", "BR"));
     private final Random random = new Random();
@@ -133,7 +136,7 @@ public class FakerService {
         }
     }
 
-    public void populateProfessorServiceTable(int numeroDeEntradas) {
+    public void populateProfessorTable(int numeroDeEntradas) {
         for (int i = 0; i < numeroDeEntradas; i++) {
             ProfessorRequest professor = new ProfessorRequest();
             professor.setNome(faker.name().fullName());
@@ -142,10 +145,12 @@ public class FakerService {
             professor.setOrgaoExpedidorRg(faker.space().agencyAbbreviation());
             professor.setCpf(gerarCPF(faker));
             professor.setSexo(faker.options().option(SexoEnum.values()));
+
             ContatoRequest contato = new ContatoRequest();
             contato.setTelefone(faker.phoneNumber().cellPhone());
             contato.setEmail(faker.internet().safeEmailAddress());
             professor.setContato(contato);
+
             EnderecoRequest endereco = new EnderecoRequest();
             endereco.setCep(faker.address().zipCode());
             endereco.setLogradouro(faker.address().streetName());
@@ -155,8 +160,98 @@ public class FakerService {
             endereco.setCidade(faker.address().city());
             endereco.setEstado(faker.address().stateAbbr());
             professor.setEndereco(endereco);
+
+            // Associar a um departamento aleatório se existir
+            Long departamentoId = getRandomDepartamentoId();
+            if (departamentoId != null) {
+                professor.setDepartamentoId(departamentoId);
+            }
+
+            // Associar a disciplinas aleatórias se existirem
+            List<Long> disciplinasIds = getRandomDisciplinasIds(1, 5);
+            if (!disciplinasIds.isEmpty()) {
+                professor.setDisciplinasId(disciplinasIds);
+            }
+
             professorController.adicionar(professor);
         }
+    }
+
+    public void populateCursoTable(int numeroDeEntradas) {
+        for (int i = 0; i < numeroDeEntradas; i++) {
+            CursoRequest curso = new CursoRequest();
+            curso.setNome(faker.educator().course());
+
+            // Associar a um departamento aleatório se existir
+            Long departamentoId = getRandomDepartamentoId();
+            if (departamentoId != null) {
+                curso.setDepartamentoId(departamentoId);
+            }
+
+            cursoController.adicionar(curso);
+        }
+    }
+
+    // Métodos auxiliares para obter IDs aleatórios
+    private Long getRandomDepartamentoId() {
+        List<Long> ids = departamentoRepository.findAll().stream()
+                .map(d -> d.getId())
+                .toList();
+        if (ids.isEmpty()) {
+            return null;
+        }
+        return ids.get(random.nextInt(ids.size()));
+    }
+
+    private Long getRandomCursoId() {
+        List<Long> ids = cursoRepository.findAll().stream()
+                .map(c -> c.getId())
+                .toList();
+        if (ids.isEmpty()) {
+            return null;
+        }
+        return ids.get(random.nextInt(ids.size()));
+    }
+
+    private Long getRandomTurmaId() {
+        List<Long> ids = turmaRepository.findAll().stream()
+                .map(t -> t.getId())
+                .toList();
+        if (ids.isEmpty()) {
+            return null;
+        }
+        return ids.get(random.nextInt(ids.size()));
+    }
+
+    private Long getRandomAlunoId() {
+        List<Long> ids = alunoRepository.findAll().stream()
+                .map(a -> a.getId())
+                .toList();
+        if (ids.isEmpty()) {
+            return null;
+        }
+        return ids.get(random.nextInt(ids.size()));
+    }
+
+    private List<Long> getRandomDisciplinasIds(int min, int max) {
+        List<Long> allIds = disciplinaRepository.findAll().stream()
+                .map(d -> d.getId())
+                .toList();
+
+        if (allIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        int quantidade = random.nextInt(Math.min(max, allIds.size()) - min + 1) + min;
+        List<Long> selectedIds = new ArrayList<>();
+        List<Long> availableIds = new ArrayList<>(allIds);
+
+        for (int i = 0; i < quantidade && !availableIds.isEmpty(); i++) {
+            int index = random.nextInt(availableIds.size());
+            selectedIds.add(availableIds.remove(index));
+        }
+
+        return selectedIds;
     }
 
 }

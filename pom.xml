@@ -15,7 +15,7 @@
     <description>Template Back-end</description>
     <properties>
         <java.version>17</java.version>
-<!--        <jasperreports.version>6.21.2</jasperreports.version>-->
+        <!--        <jasperreports.version>6.21.2</jasperreports.version>-->
         <modelmapper.version>3.2.1</modelmapper.version>
         <springdoc.version>2.6.0</springdoc.version>
     </properties>
@@ -71,21 +71,21 @@
             <version>${modelmapper.version}</version>
         </dependency>
 
-<!--        <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
-            <version>${jasperreports.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports-functions</artifactId>
-            <version>${jasperreports.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports-fonts</artifactId>
-            <version>${jasperreports.version}</version>
-        </dependency>-->
+        <!--        <dependency>
+                    <groupId>net.sf.jasperreports</groupId>
+                    <artifactId>jasperreports</artifactId>
+                    <version>${jasperreports.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>net.sf.jasperreports</groupId>
+                    <artifactId>jasperreports-functions</artifactId>
+                    <version>${jasperreports.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>net.sf.jasperreports</groupId>
+                    <artifactId>jasperreports-fonts</artifactId>
+                    <version>${jasperreports.version}</version>
+                </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

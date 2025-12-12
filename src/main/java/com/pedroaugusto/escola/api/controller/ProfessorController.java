@@ -1,7 +1,7 @@
 package com.pedroaugusto.escola.api.controller;
 
 import com.pedroaugusto.escola.api.assembler.GenericAssembler;
-import com.pedroaugusto.escola.api.disassembler.ProfessorDisassembler;
+import com.pedroaugusto.escola.api.disassembler.generic.GenericDisassembler;
 import com.pedroaugusto.escola.api.request.ProfessorRequest;
 import com.pedroaugusto.escola.api.response.ProfessorResponse;
 import com.pedroaugusto.escola.api.response.list.ProfessorListResponse;
@@ -31,7 +31,7 @@ public class ProfessorController {
     private final DeletaProfessorService deletaProfessorService;
 
     private final GenericAssembler assembler;
-    private final ProfessorDisassembler disassembler;
+    private final GenericDisassembler disassembler;
 
     @GetMapping("/all")
     public List<ProfessorListResponse> listarTodas() {
@@ -58,7 +58,7 @@ public class ProfessorController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProfessorResponse adicionar(@Valid @RequestBody ProfessorRequest request) {
-        Professor professorResult = disassembler.toEntity(request);
+        Professor professorResult = assembler.toEntity(request, Professor.class);
         Professor professorSalvo = cadastroProfessorService.salvar(professorResult);
 
         return assembler.toResponse(professorSalvo, ProfessorResponse.class);

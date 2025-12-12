@@ -10,6 +10,7 @@ import java.util.UUID;
 public interface AlunoRepository extends CustomJpaRepository<Aluno, Long> {
 
     Optional<Aluno> findByCodigo(UUID codigo);
+
     Boolean existsByCpf(String cpf);
 
 }

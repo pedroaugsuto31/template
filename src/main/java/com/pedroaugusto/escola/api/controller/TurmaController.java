@@ -29,20 +29,20 @@ public class TurmaController {
     private final AtualizaTurmaService atualizaTurmaService;
     private final DeletaTurmaService deletaTurmaService;
 
-    private final GenericAssembler genericAssembler;
-    private final GenericDisassembler genericDisassembler;
+    private final GenericAssembler assembler;
+    private final GenericDisassembler disassembler;
 
     @GetMapping("/all")
     public List<TurmaResponse> listarTodas() {
         List<Turma> genericList = listaTurmaService.listarTodas();
 
-        return genericAssembler.toCollectionResponseList(genericList, TurmaResponse.class);
+        return assembler.toCollectionResponseList(genericList, TurmaResponse.class);
     }
 
     @GetMapping
     public Page<TurmaResponse> listar(TurmaFilter turmaFilter, Pageable pageable) {
         Page<Turma> turmaPage = listaTurmaService.listar(turmaFilter, pageable);
-        List<TurmaResponse> turmaList = genericAssembler.toCollectionResponseList(turmaPage.getContent(), TurmaResponse.class);
+        List<TurmaResponse> turmaList = assembler.toCollectionResponseList(turmaPage.getContent(), TurmaResponse.class);
 
         return new PageImpl<>(turmaList, turmaPage.getPageable(), turmaPage.getTotalElements());
     }
@@ -51,24 +51,24 @@ public class TurmaController {
     public TurmaResponse buscar(@PathVariable UUID codigo) {
         Turma turma = buscaTurmaService.findByCode(codigo);
 
-        return genericAssembler.toResponse(turma, TurmaResponse.class);
+        return assembler.toResponse(turma, TurmaResponse.class);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TurmaResponse adicionar(@Valid @RequestBody TurmaRequest turmaRequest) {
-        Turma turmaResult = genericAssembler.toEntity(turmaRequest, Turma.class);
+        Turma turmaResult = assembler.toEntity(turmaRequest, Turma.class);
         Turma turmaSalva = cadastroTurmaService.salvar(turmaResult);
 
-        return genericAssembler.toResponse(turmaSalva, TurmaResponse.class);
+        return assembler.toResponse(turmaSalva, TurmaResponse.class);
     }
 
     @PutMapping("/{codigo}")
     public TurmaResponse atualizar(@PathVariable UUID codigo, @Valid @RequestBody TurmaRequest turmaRequest) {
         Turma turmaAtual = buscaTurmaService.findByCode(codigo);
-        genericDisassembler.copyToEntity(turmaRequest, turmaAtual);
+        disassembler.copyToEntity(turmaRequest, turmaAtual);
 
-        return genericAssembler.toResponse(atualizaTurmaService.atualizar(turmaAtual), TurmaResponse.class);
+        return assembler.toResponse(atualizaTurmaService.atualizar(turmaAtual), TurmaResponse.class);
     }
 
     @DeleteMapping("/{codigo}")

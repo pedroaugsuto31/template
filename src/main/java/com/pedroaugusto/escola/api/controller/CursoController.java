@@ -1,7 +1,7 @@
 package com.pedroaugusto.escola.api.controller;
 
 import com.pedroaugusto.escola.api.assembler.GenericAssembler;
-import com.pedroaugusto.escola.api.disassembler.CursoDisassembler;
+import com.pedroaugusto.escola.api.disassembler.generic.GenericDisassembler;
 import com.pedroaugusto.escola.api.request.CursoRequest;
 import com.pedroaugusto.escola.api.response.CursoResponse;
 import com.pedroaugusto.escola.domain.model.Curso;
@@ -29,7 +29,7 @@ public class CursoController {
     private final DeletaCursoService deletaCursoService;
 
     private final GenericAssembler assembler;
-    private final CursoDisassembler disassembler;
+    private final GenericDisassembler disassembler;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

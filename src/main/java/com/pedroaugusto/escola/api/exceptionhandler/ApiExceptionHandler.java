@@ -1,12 +1,12 @@
 package com.pedroaugusto.escola.api.exceptionhandler;
 
+import com.fasterxml.jackson.databind.JsonMappingException.Reference;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.pedroaugusto.escola.domain.exception.CpfJaCadastradoException;
 import com.pedroaugusto.escola.domain.exception.EntidadeEmUsoException;
 import com.pedroaugusto.escola.domain.exception.EntidadeNaoEncontradaException;
 import com.pedroaugusto.escola.domain.exception.NegocioException;
-import com.fasterxml.jackson.databind.JsonMappingException.Reference;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;

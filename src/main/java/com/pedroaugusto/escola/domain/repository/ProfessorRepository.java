@@ -10,6 +10,7 @@ import java.util.UUID;
 public interface ProfessorRepository extends CustomJpaRepository<Professor, Long> {
 
     Optional<Professor> findByCodigo(UUID codigo);
+
     Boolean existsByCpf(String cpf);
 
 }
